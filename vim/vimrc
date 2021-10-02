@@ -49,10 +49,13 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug '/usr/local/opt/fzf'
+
 Plug 'jremmen/vim-ripgrep'
 
 " Orgmode stuff
-Plug 'jceb/vim-orgmode'
+"Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 " Plug 'mattn/calendar-vim'
 Plug 'majutsushi/tagbar'
@@ -81,23 +84,25 @@ call plug#end()
 
 set nocompatible
 syntax on
+"set termguicolors
 
 " colorscheme torte
 " colorscheme summerfruit256
 colorscheme PaperColor
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.light': { 
-  \       'override' : {
-  \         'color00' : ['#f2f2f2', ''],
-  \         'color05' : ['#838383', ''],
-  \         'color07' : ['#404040', ''],
-  \         'linenumber_bg' : ['#f2f2f2', ''],
-  \       }
-  \     }
-  \   }
-  \ }
-set background=dark
+"let g:PaperColor_Theme_Options = {
+"  \   'theme': {
+"  \     'default.light': { 
+"  \       'override' : {
+"  \         'color00' : ['#f2f2f2', ''],
+"  \         'color05' : ['#838383', ''],
+"  \         'color07' : ['#404040', ''],
+"  \         'linenumber_bg' : ['#f2f2f2', ''],
+"  \       }
+"  \     }
+"  \   }
+"  \ }
+"set background=dark
+set background=light
 
 
 " NERDTree git mappings (non-unicode)
@@ -127,34 +132,48 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|media)|(\.(pyc|swp|
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " orgmode stuff
-let g:org_agenda_files = ['~/journal/*.org']
-let g:org_indent = 1
+"let g:org_agenda_files = ['~/journal/*.org']
+"let g:org_indent = 1
 " States before the | are 'TODO' states and after are the 'done' states
 " let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
 
+
 " leader mappings
-" noremap <leader>D :put =strftime('%Y-%m-%e')<cr>
-noremap <leader>D :execute ':normal! i'.strftime('%Y-%m-%e')<cr>
+" Date
+noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
+" JIRA
+noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
+noremap <leader>jil :execute':normal! i'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
+" vimrc
 noremap <leader>ev :vsplit $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
+" Light and dark modes
 noremap <leader>bsd :set background=dark<cr>
 noremap <leader>bsl :set background=light<cr>
-
-" TODO maybe move this to a code plugin
+noremap <leader>bst :call ToggleBackground()<cr>
+function! ToggleBackground()
+	if &background == 'light'
+		set background=dark
+	else
+		set background=light
+	endif
+endfunction
+" ALE
 noremap <leader>at :ALEToggle<cr>
 noremap <leader>ag :ALEGoToDefinition<cr>
 noremap <leader>af :ALEFindReferences<cr>
-noremap <leader>b. :!black %<cr>
-
+" fugitive
+noremap <leader>gd :Gdiffsplit<cr>
 " vim base64
 let g:vim_base64_disable_default_key_mappings = 1
 vnoremap <silent> <leader>64d :<c-u>call base64#v_atob()<cr>
 vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
+noremap <leader>gt :GitGutterToggle<cr>
 
 " vimwiki
 let cisco_notes = {}
 let cisco_notes.name = 'Cisco Notes'
-let cisco_notes.path = '~/Documents/notes'
+let cisco_notes.path = '~/notes'
 let cisco_notes.index = 'CiscoNotesRoot'
 let cisco_notes.diary_rel_path = ''
 let cisco_notes.syntax = 'markdown'
@@ -167,3 +186,13 @@ let my_notes.diary_rel_path = ''
 let my_notes.syntax = 'markdown'
 let my_notes.ext = '.md'
 let g:vimwiki_list = [cisco_notes, my_notes]
+
+function! JournalPageFromTemplate()
+    let fname = strftime('%Y-%m-%d').'.md'
+    let dow_tpl = strftime('%A').'JournalTemplate.md'
+
+    call system('cp -n ' . dow_tpl . ' ' . fname)
+endfunction
+
+noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
+
