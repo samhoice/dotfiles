@@ -5,3 +5,8 @@ setlocal textwidth=79
 setlocal expandtab
 setlocal autoindent
 setlocal fileformat=unix
+
+setlocal number
+
+noremap <localleader>b. :!black %<cr>
+noremap <localleader>b :!black 
