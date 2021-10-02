@@ -196,3 +196,7 @@ endfunction
 
 noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
 
+" to source an external file
+if filereadable(expand('~/.vim/cisco.conf'))
+    source ~/.vim/cisco.conf
+endif
