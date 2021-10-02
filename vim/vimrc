@@ -1,0 +1,169 @@
+" conditionally install vimplug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+set mouse=a
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+"This was my existing setting
+"set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+" Settings for python development
+"au BufNewFile,BufRead *.py 
+"    \ set tabstop=4 |
+"    \ set softtabstop=4 |
+"    \ set shiftwidth=4 |
+"    \ set textwidth=79 |
+"    \ set expandtab |
+"    \ set autoindent |
+"    \ set fileformat=unix
+
+
+" First shot at html/css settings
+au BufNewFile,BufRead *.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set expandtab |
+    \ set shiftwidth=2
+
+let mapleader=" "
+let maplocalleader="\\"
+
+filetype plugin indent on
+
+call plug#begin('~/.vim/vplug')
+
+" Code editing
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'pangloss/vim-javascript'
+Plug 'dense-analysis/ale'
+Plug 'christianrondeau/vim-base64'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+
+Plug 'jremmen/vim-ripgrep'
+
+" Orgmode stuff
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+" Plug 'mattn/calendar-vim'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/utl.vim'
+
+Plug 'mrk21/yaml-vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'mileszs/ack.vim'
+
+" For writing
+" Focus mode: Goyo to turn it on or off
+Plug 'junegunn/goyo.vim'
+" For working with text files
+Plug 'reedes/vim-pencil'
+" Markdown wiki
+Plug 'vimwiki/vimwiki'
+ 
+" airline, because powerline is too hard to install
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" colorschemes
+Plug 'vim-scripts/summerfruit256.vim'
+Plug 'NLKNguyen/papercolor-theme'
+call plug#end()
+
+set nocompatible
+syntax on
+
+" colorscheme torte
+" colorscheme summerfruit256
+colorscheme PaperColor
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.light': { 
+  \       'override' : {
+  \         'color00' : ['#f2f2f2', ''],
+  \         'color05' : ['#838383', ''],
+  \         'color07' : ['#404040', ''],
+  \         'linenumber_bg' : ['#f2f2f2', ''],
+  \       }
+  \     }
+  \   }
+  \ }
+set background=dark
+
+
+" NERDTree git mappings (non-unicode)
+" This might not be needed anymore since all my terminals should
+" be unicode compliant?
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "*",
+    \ "Staged"    : "+",
+    \ "Untracked" : "u",
+    \ "Renamed"   : ">",
+    \ "Unmerged"  : "=",
+    \ "Deleted"   : "x",
+    \ "Dirty"     : "*",
+    \ "Clean"     : "c",
+    \ 'Ignored'   : 'i',
+    \ "Unknown"   : "?"
+    \ }
+
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Ack
+
+" ctags
+set tags=tags
+
+" custom ignores for ctrlp (node_modules and media are big ones)
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|media)|(\.(pyc|swp|ico|git|svn))$'
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" orgmode stuff
+let g:org_agenda_files = ['~/journal/*.org']
+let g:org_indent = 1
+" States before the | are 'TODO' states and after are the 'done' states
+" let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
+
+" leader mappings
+" noremap <leader>D :put =strftime('%Y-%m-%e')<cr>
+noremap <leader>D :execute ':normal! i'.strftime('%Y-%m-%e')<cr>
+noremap <leader>ev :vsplit $MYVIMRC<cr>
+noremap <leader>sv :source $MYVIMRC<cr>
+noremap <leader>bsd :set background=dark<cr>
+noremap <leader>bsl :set background=light<cr>
+
+" TODO maybe move this to a code plugin
+noremap <leader>at :ALEToggle<cr>
+noremap <leader>ag :ALEGoToDefinition<cr>
+noremap <leader>af :ALEFindReferences<cr>
+noremap <leader>b. :!black %<cr>
+
+" vim base64
+let g:vim_base64_disable_default_key_mappings = 1
+vnoremap <silent> <leader>64d :<c-u>call base64#v_atob()<cr>
+vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
+
+" vimwiki
+let cisco_notes = {}
+let cisco_notes.name = 'Cisco Notes'
+let cisco_notes.path = '~/Documents/notes'
+let cisco_notes.index = 'CiscoNotesRoot'
+let cisco_notes.diary_rel_path = ''
+let cisco_notes.syntax = 'markdown'
+let cisco_notes.ext = '.md'
+let my_notes = {}
+let my_notes.name = 'My Notes'
+let my_notes.path = '~/ext_notes'
+let my_notes.index = 'NotesRoot'
+let my_notes.diary_rel_path = ''
+let my_notes.syntax = 'markdown'
+let my_notes.ext = '.md'
+let g:vimwiki_list = [cisco_notes, my_notes]
