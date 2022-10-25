@@ -239,11 +239,12 @@ endfunction
 
 noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
 
-let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd,text call pencil#init()
-augroup END
+" Remove this?
+" let g:pencil#wrapModeDefault = 'soft'
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd,text call pencil#init()
+" augroup END
 
 " to source an external file
 if filereadable(expand('~/.vim/cisco.vim'))
