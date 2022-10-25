@@ -5,8 +5,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" mouse all
 set mouse=a
+
+" statusline on for single window
+set laststatus=2
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+set diffopt=vertical
+
+" swap file
+:set dir=~/.vim/swap
 
 "This was my existing setting
 "set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -21,13 +30,16 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 "    \ set autoindent |
 "    \ set fileformat=unix
 
-
 " First shot at html/css settings
-au BufNewFile,BufRead *.html,*.css
+au BufNewFile,BufRead *.html,*.css,*.xml
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set expandtab |
     \ set shiftwidth=2
+
+" special for OCPT - can remove
+au BufNewFile,BufRead Dockerfile_base
+    \ set filetype=dockerfile
 
 let mapleader=" "
 let maplocalleader="\\"
@@ -47,7 +59,10 @@ Plug 'dense-analysis/ale'
 Plug 'christianrondeau/vim-base64'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'raimon49/requirements.txt.vim'
 
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug '/usr/local/opt/fzf'
@@ -74,52 +89,60 @@ Plug 'reedes/vim-pencil'
 Plug 'vimwiki/vimwiki'
  
 " airline, because powerline is too hard to install
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " colorschemes
 Plug 'vim-scripts/summerfruit256.vim'
 Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 
+
 set nocompatible
 syntax on
 "set termguicolors
 
-" colorscheme torte
-" colorscheme summerfruit256
+"colorscheme torte
+"colorscheme summerfruit256
 colorscheme PaperColor
-"let g:PaperColor_Theme_Options = {
-"  \   'theme': {
-"  \     'default.light': { 
-"  \       'override' : {
-"  \         'color00' : ['#f2f2f2', ''],
-"  \         'color05' : ['#838383', ''],
-"  \         'color07' : ['#404040', ''],
-"  \         'linenumber_bg' : ['#f2f2f2', ''],
-"  \       }
-"  \     }
-"  \   }
-"  \ }
 "set background=dark
 set background=light
+
+function! EMHighlight()
+  hi link EasyMotionTarget SpellBad
+  hi link EasyMotionTarget2First SpellRare
+  hi link EasyMotionTarget2Second SpellLocal
+endfunction
+
+call EMHighlight()
+
+" function for changing light/dark mode
+function! ToggleBackground()
+	if &background == 'light'
+		set background=dark
+	else
+		set background=light
+	endif
+
+  call EMHighlight()
+endfunction
 
 
 " NERDTree git mappings (non-unicode)
 " This might not be needed anymore since all my terminals should
 " be unicode compliant?
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-    \ "Modified"  : "*",
-    \ "Staged"    : "+",
-    \ "Untracked" : "u",
-    \ "Renamed"   : ">",
-    \ "Unmerged"  : "=",
-    \ "Deleted"   : "x",
-    \ "Dirty"     : "*",
-    \ "Clean"     : "c",
-    \ 'Ignored'   : 'i',
-    \ "Unknown"   : "?"
-    \ }
+"let g:NERDTreeGitStatusIndicatorMapCustom = {
+"    \ "Modified"  : "*",
+"    \ "Staged"    : "+",
+"    \ "Untracked" : "u",
+"    \ "Renamed"   : ">",
+"    \ "Unmerged"  : "=",
+"    \ "Deleted"   : "x",
+"    \ "Dirty"     : "*",
+"    \ "Clean"     : "c",
+"    \ 'Ignored'   : 'i',
+"    \ "Unknown"   : "?"
+"    \ }
 
 let g:ackprg = 'ag --vimgrep --smart-case'
 cnoreabbrev ag Ack
@@ -138,44 +161,60 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 " let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
 
 
+
 " leader mappings
+" vimrc updating
+noremap <leader>ev :vsplit $MYVIMRC<cr>
+noremap <leader>sv :source $MYVIMRC<cr>
+" NERDTree
+nnoremap <leader>ntg :NERDTreeFocus<cr>
+nnoremap <leader>ntt :NERDTreeToggle<cr>
+nnoremap <leader>ntf :NERDTreeFind<cr>
+
+" line
+nnoremap <leader>o o<esc>^D
+nnoremap <leader>O O<esc>^D
 " Date
 noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 " JIRA
-noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
+noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/browse/BDB20-"<cr>
 noremap <leader>jil :execute':normal! i'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
-" vimrc
-noremap <leader>ev :vsplit $MYVIMRC<cr>
-noremap <leader>sv :source $MYVIMRC<cr>
+noremap <leader>gal :execute':normal! a'."https://gitlab-sjc.cisco.com/"<cr>
 " Light and dark modes
 noremap <leader>bsd :set background=dark<cr>
 noremap <leader>bsl :set background=light<cr>
 noremap <leader>bst :call ToggleBackground()<cr>
-function! ToggleBackground()
-	if &background == 'light'
-		set background=dark
-	else
-		set background=light
-	endif
-endfunction
+
 " ALE
-noremap <leader>at :ALEToggle<cr>
-noremap <leader>ag :ALEGoToDefinition<cr>
-noremap <leader>af :ALEFindReferences<cr>
-" fugitive
-noremap <leader>gd :Gdiffsplit<cr>
+let g:ale_hover_to_preview = 0
+nnoremap <leader>at <Plug>(ale_toggle)
+nnoremap <leader>ag <Plug>(ale_go_to_definition)
+nnoremap <silent> <Plug>(ale_find_ref_qf) :ALEFindReferences -quickfix<Return>
+nnoremap <silent> <leader>ar <Plug>(ale_find_references)
+nnoremap <leader>ah <Plug>(ale_hover)
+nnoremap <leader>an <Plug>(ale_next)
+nnoremap <leader>ap <Plug>(ale_previous)
+nnoremap <leader>ad <Plug>(ale_detail)
+
+" git fugitive
+nnoremap <leader>gd :Gdiffsplit<cr>
+" git gutter
+nnoremap <leader>gt :GitGutterToggle<cr>
 " vim base64
 let g:vim_base64_disable_default_key_mappings = 1
 vnoremap <silent> <leader>64d :<c-u>call base64#v_atob()<cr>
 vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
-noremap <leader>gt :GitGutterToggle<cr>
+" change linefeeds from yaml
+noremap <leader>lf :s/\\n/\r/g<cr>
 
 " vimwiki
+"nnoremap <leader>w
+nnoremap <leader>wt :VimwikiTOC<cr>
 let cisco_notes = {}
-let cisco_notes.name = 'Cisco Notes'
+let cisco_notes.name = 'Work Notes'
 let cisco_notes.path = '~/notes'
 let cisco_notes.index = 'CiscoNotesRoot'
-let cisco_notes.diary_rel_path = ''
+let cisco_notes.diary_rel_path = 'DevJournal'
 let cisco_notes.syntax = 'markdown'
 let cisco_notes.ext = '.md'
 let my_notes = {}
@@ -188,11 +227,21 @@ let my_notes.ext = '.md'
 let g:vimwiki_list = [cisco_notes, my_notes]
 
 function! JournalPageFromTemplate()
-    let fname = strftime('%Y-%m-%d').'.md'
+    let fname = "" . g:cisco_notes.diary_rel_path . "/" . strftime('%Y-%m-%d').'.md'
     let dow_tpl = strftime('%A').'JournalTemplate.md'
 
-    call system('cp -n ' . dow_tpl . ' ' . fname)
+    if isdirectory(g:cisco_notes.diary_rel_path) && !filereadable(fname)
+      call system("task export next | jq -r '.[] | .description' | sed 's/^/- \[ \] /' > open_tasks.md")
+      call system("sed -e '/# Tasks/r open_tasks.md' ". dow_tpl . " > " . fname)
+    endif
+    "call system('cp -n ' . dow_tpl . ' ' . fname)
 endfunction
 
 noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
 
+
+let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd,text call pencil#init()
+augroup END
