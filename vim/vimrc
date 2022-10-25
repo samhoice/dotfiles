@@ -246,6 +246,6 @@ augroup pencil
 augroup END
 
 " to source an external file
-if filereadable(expand('~/.vim/cisco.conf'))
-    source ~/.vim/cisco.conf
+if filereadable(expand('~/.vim/cisco.vim'))
+    source ~/.vim/cisco.vim
 endif
