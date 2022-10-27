@@ -11,7 +11,8 @@ mkdir -p $VIMDIR/swap
 # vim
 echo "linking vimrc"
 ln -s -f $SOURCEDIR/vim/vimrc $VIMDIR/vimrc
-# TODO: there's a bug here:
+# TODO: there's a bug here. you can't make links the same way on MacOS and Linux
+# This might be a good case for switching to ansible
 # echo "linking vim/autoload/"
 # ln -s -f $SOURCEDIR/vim/autoload $VIMDIR/autoload
 # echo "linking vim/ftplugin/"
