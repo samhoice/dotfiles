@@ -17,19 +17,6 @@ set diffopt=vertical
 " swap file
 :set dir=~/.vim/swap
 
-"This was my existing setting
-"set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-
-" Settings for python development
-"au BufNewFile,BufRead *.py 
-"    \ set tabstop=4 |
-"    \ set softtabstop=4 |
-"    \ set shiftwidth=4 |
-"    \ set textwidth=79 |
-"    \ set expandtab |
-"    \ set autoindent |
-"    \ set fileformat=unix
-
 " First shot at html/css settings
 au BufNewFile,BufRead *.html,*.css,*.xml
     \ set tabstop=2 |
@@ -168,6 +155,7 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 " vimrc updating
 noremap <leader>ev :vsplit $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
+
 " NERDTree
 nnoremap <leader>ntg :NERDTreeFocus<cr>
 nnoremap <leader>ntt :NERDTreeToggle<cr>
@@ -176,16 +164,23 @@ nnoremap <leader>ntf :NERDTreeFind<cr>
 " line - should now be replaced with '] '
 " nnoremap <leader>o o<esc>^D
 " nnoremap <leader>O O<esc>^D
+
 " Date
 noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
+
 " JIRA
 noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/browse/BDB20-"<cr>
 noremap <leader>jil :execute':normal! i'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
 noremap <leader>gal :execute':normal! a'."https://gitlab-sjc.cisco.com/"<cr>
+
 " Light and dark modes
 noremap <leader>bsd :set background=dark<cr>
 noremap <leader>bsl :set background=light<cr>
 noremap <leader>bst :call ToggleBackground()<cr>
+
+" FZF
+nnoremap <leader>p :FZF<cr>
+nnoremap <leader>; :Buffers<cr>
 
 " ALE
 let g:ale_hover_to_preview = 0
