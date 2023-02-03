@@ -5,6 +5,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" set nocp
+
 " mouse all
 set mouse=a
 
@@ -38,7 +40,7 @@ call plug#begin('~/.vim/vplug')
 
 " Code editing
 Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
@@ -50,8 +52,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
 Plug 'easymotion/vim-easymotion'
 Plug 'raimon49/requirements.txt.vim'
+Plug 'moll/vim-bbye'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -88,6 +92,7 @@ Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Fuzen-py/dark_mode.vim
 call plug#end()
 
+au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn} setlocal syntax=markdown
 
 set nocompatible
 syntax on
@@ -155,8 +160,9 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " leader mappings
 " vimrc updating
-noremap <leader>ev :vsplit $MYVIMRC<cr>
+noremap <leader>ev :edit $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
+noremap <leader>ed :Ex ~/.vim<cr>
 
 " NERDTree
 nnoremap <leader>ntg :NERDTreeFocus<cr>
@@ -195,10 +201,13 @@ nnoremap <leader>an <Plug>(ale_next)
 nnoremap <leader>ap <Plug>(ale_previous)
 nnoremap <leader>ad <Plug>(ale_detail)
 
+let g:ale_markdown_markdown_executable = 'markdownlint-cli2'
+
 " git fugitive
 nnoremap <leader>gd :Gdiffsplit<cr>
 " git gutter
 nnoremap <leader>gt :GitGutterToggle<cr>
+
 " vim base64
 let g:vim_base64_disable_default_key_mappings = 1
 vnoremap <silent> <leader>64d :<c-u>call base64#v_atob()<cr>
@@ -208,7 +217,6 @@ noremap <leader>lf :s/\\n/\r/g<cr>
 
 " vimwiki
 "nnoremap <leader>w
-nnoremap <leader>wt :VimwikiTOC<cr>
 let cisco_notes = {}
 let cisco_notes.name = 'Work Notes'
 let cisco_notes.path = '~/notes'
@@ -225,6 +233,7 @@ let my_notes.syntax = 'markdown'
 let my_notes.ext = '.md'
 let g:vimwiki_list = [cisco_notes, my_notes]
 let g:vimwiki_listsyms = ' .oOx' " Obsidian uses 'x', which confuses vimwiki
+let g:vimwiki_global_ext = 0
 
 function! JournalPageFromTemplate()
     let fname = "" . g:cisco_notes.diary_rel_path . "/" . strftime('%Y-%m-%d').'.md'
@@ -238,13 +247,6 @@ function! JournalPageFromTemplate()
 endfunction
 
 noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
-
-" Remove this?
-" let g:pencil#wrapModeDefault = 'soft'
-" augroup pencil
-"   autocmd!
-"   autocmd FileType markdown,mkd,text call pencil#init()
-" augroup END
 
 " to source an external file
 if filereadable(expand('~/.vim/cisco.vim'))
