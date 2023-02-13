@@ -216,14 +216,10 @@ vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
 noremap <leader>lf :s/\\n/\r/g<cr>
 
 " vimwiki
-"nnoremap <leader>w
-let cisco_notes = {}
-let cisco_notes.name = 'Work Notes'
-let cisco_notes.path = '~/notes'
-let cisco_notes.index = 'CiscoNotesRoot'
-let cisco_notes.diary_rel_path = 'DevJournal'
-let cisco_notes.syntax = 'markdown'
-let cisco_notes.ext = '.md'
+let g:vimwiki_listsyms = ' .oOx' " Obsidian uses 'x', which confuses vimwiki
+let g:vimwiki_global_ext = 0
+
+" notes def
 let my_notes = {}
 let my_notes.name = 'My Notes'
 let my_notes.path = '~/ext_notes'
@@ -231,9 +227,9 @@ let my_notes.index = 'NotesRoot'
 let my_notes.diary_rel_path = ''
 let my_notes.syntax = 'markdown'
 let my_notes.ext = '.md'
-let g:vimwiki_list = [cisco_notes, my_notes]
-let g:vimwiki_listsyms = ' .oOx' " Obsidian uses 'x', which confuses vimwiki
-let g:vimwiki_global_ext = 0
+let g:vimwiki_list = [my_notes]
+
+nmap <localleader>- <Plug>VimwikiRemoveHeaderLevel
 
 function! JournalPageFromTemplate()
     let fname = "" . g:cisco_notes.diary_rel_path . "/" . strftime('%Y-%m-%d').'.md'
