@@ -53,9 +53,14 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-dispatch'
 Plug 'easymotion/vim-easymotion'
 Plug 'raimon49/requirements.txt.vim'
 Plug 'moll/vim-bbye'
+
+" Expirimental
+Plug 'sk1418/QFGrep'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -100,9 +105,9 @@ syntax on
 
 "colorscheme torte
 "colorscheme summerfruit256
-colorscheme PaperColor
+"colorscheme PaperColor
 " set background=dark
-set background=light
+set background=dark
 
 function! EMHighlight()
   hi link EasyMotionTarget SpellBad
@@ -157,8 +162,11 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 " let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
 
 
-
 " leader mappings
+" highlighting
+noremap <leader>[h :set hls<cr>
+noremap <leader>]h :set nohls<cr>
+
 " vimrc updating
 noremap <leader>ev :edit $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
@@ -194,8 +202,11 @@ nnoremap <leader>; :Buffers<cr>
 let g:ale_hover_to_preview = 0
 nnoremap <leader>at <Plug>(ale_toggle)
 nnoremap <leader>ag <Plug>(ale_go_to_definition)
+" references will be found and added to quickfix window, which will not be
+" shown
 nnoremap <silent> <Plug>(ale_find_ref_qf) :ALEFindReferences -quickfix<Return>
-nnoremap <silent> <leader>ar <Plug>(ale_find_references)
+nnoremap <silent> <leader>arl <Plug>(ale_find_references)
+nnoremap <silent> <leader>arf <Plug>(ale_find_ref_qf)
 nnoremap <leader>ah <Plug>(ale_hover)
 nnoremap <leader>an <Plug>(ale_next)
 nnoremap <leader>ap <Plug>(ale_previous)
@@ -213,7 +224,7 @@ let g:vim_base64_disable_default_key_mappings = 1
 vnoremap <silent> <leader>64d :<c-u>call base64#v_atob()<cr>
 vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
 " change linefeeds from yaml
-noremap <leader>lf :s/\\n/\r/g<cr>
+noremap <leader>lf :s/\\t/  /eg<cr>:s/\\n/\r/g<cr>
 
 " vimwiki
 let g:vimwiki_listsyms = ' .oOx' " Obsidian uses 'x', which confuses vimwiki
