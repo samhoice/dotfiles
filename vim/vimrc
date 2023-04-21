@@ -233,7 +233,7 @@ let g:vimwiki_global_ext = 0
 " notes def
 let my_notes = {}
 let my_notes.name = 'My Notes'
-let my_notes.path = '~/ext_notes'
+let my_notes.path = '~/projects/notes'
 let my_notes.index = 'NotesRoot'
 let my_notes.diary_rel_path = ''
 let my_notes.syntax = 'markdown'
