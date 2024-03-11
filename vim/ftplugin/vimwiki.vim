@@ -1,8 +1,8 @@
-" These should probably be localleader mappings...
 nnoremap <leader>wt :VimwikiTOC<cr>
 
-" Actual localleader mappings
-" noremap <localleader>gl :VimwikiFollowLink<cr>
-" noremap <localleader>sl :VimwikiVSplitLink<cr>
+" This section matches ftplugin/markdown.vim
+noremap <localleader>wo :PencilSoft<cr>
+noremap <localleader>wx :PencilOff<cr>
+noremap <localleader>tv :set filetype=markdown<cr>
 
 :PencilSoft

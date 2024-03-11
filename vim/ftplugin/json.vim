@@ -4,5 +4,3 @@ setlocal expandtab
 setlocal shiftwidth=2
 
 setlocal number
-
-noremap <localleader>b. :!bun run prettier -w %<cr>

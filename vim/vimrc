@@ -16,6 +16,10 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 set diffopt=vertical
 
+" backup by copying - this may slow things down but allows
+" file watching to work as expected
+:set backupcopy=yes
+
 " swap file
 :set dir=~/.vim/swap
 
@@ -58,6 +62,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'easymotion/vim-easymotion'
 Plug 'raimon49/requirements.txt.vim'
 Plug 'moll/vim-bbye'
+
+Plug 'NoahTheDuke/vim-just'
 
 " Expirimental
 Plug 'sk1418/QFGrep'
@@ -106,8 +112,7 @@ syntax on
 "colorscheme torte
 "colorscheme summerfruit256
 colorscheme PaperColor
-" set background=dark
-" set background=dark
+set background=dark
 
 function! EMHighlight()
   hi link EasyMotionTarget SpellBad
@@ -185,9 +190,9 @@ nnoremap <leader>ntf :NERDTreeFind<cr>
 noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 
 " JIRA
-noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/browse/BDB20-"<cr>
-noremap <leader>jil :execute':normal! i'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
-noremap <leader>gal :execute':normal! a'."https://gitlab-sjc.cisco.com/"<cr>
+" noremap <leader>jal :execute':normal! a'."https://cx-jira.cisco.com/browse/BDB20-"<cr>
+" noremap <leader>jil :execute':normal! i'."https://cx-jira.cisco.com/projects/BDB20/issues/BDB20-"<cr>
+" noremap <leader>gal :execute':normal! a'."https://gitlab-sjc.cisco.com/"<cr>
 
 " Light and dark modes
 noremap <leader>bsd :set background=dark<cr>
@@ -226,6 +231,9 @@ vnoremap <silent> <leader>64e :<c-u>call base64#v_btoa()<cr>
 " change linefeeds from yaml
 noremap <leader>lf :s/\\t/  /eg<cr>:s/\\n/\r/g<cr>
 
+" focus
+nnoremap <leader>ff :Goyo<cr>
+
 " vimwiki
 let g:vimwiki_listsyms = ' .oOx' " Obsidian uses 'x', which confuses vimwiki
 let g:vimwiki_global_ext = 0
@@ -235,10 +243,19 @@ let my_notes = {}
 let my_notes.name = 'My Notes'
 let my_notes.path = '~/projects/notes'
 let my_notes.index = 'NotesRoot'
-let my_notes.diary_rel_path = ''
+let my_notes.diary_rel_path = 'DevJournal'
 let my_notes.syntax = 'markdown'
 let my_notes.ext = '.md'
-let g:vimwiki_list = [my_notes]
+" let g:vimwiki_list = [my_notes]
+
+let my_thoughts = {}
+let my_thoughts.name = 'My Thoughts'
+let my_thoughts.path = '~/projects/thoughts'
+let my_thoughts.index = 'README'
+let my_thoughts.diary_rel_path = ''
+let my_thoughts.syntax = 'markdown'
+let my_thoughts.ext = '.md'
+let g:vimwiki_list = [my_notes, my_thoughts]
 
 nmap <localleader>- <Plug>VimwikiRemoveHeaderLevel
 
@@ -253,7 +270,7 @@ function! JournalPageFromTemplate()
     "call system('cp -n ' . dow_tpl . ' ' . fname)
 endfunction
 
-noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
+" noremap <silent> <leader>w<leader>w :call JournalPageFromTemplate()|:VimwikiMakeDiaryNote<cr>
 
 " to source an external file
 if filereadable(expand('~/.vim/cisco.vim'))
