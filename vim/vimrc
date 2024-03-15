@@ -10,6 +10,8 @@ endif
 " mouse all
 set mouse=a
 
+" status line
+" set statusline=%f\ %{&filetype}\ %m
 " statusline on for single window
 set laststatus=2
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -63,34 +65,36 @@ Plug 'easymotion/vim-easymotion'
 Plug 'raimon49/requirements.txt.vim'
 Plug 'moll/vim-bbye'
 
-Plug 'NoahTheDuke/vim-just'
 
 " Expirimental
+" Quickfix grep
 Plug 'sk1418/QFGrep'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 
+" Searching
+Plug 'mileszs/ack.vim' " searching with ack...
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
+Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 
-" Orgmode stuff
-"Plug 'jceb/vim-orgmode'
+"
 Plug 'tpope/vim-speeddating'
 " Plug 'mattn/calendar-vim'
 Plug 'majutsushi/tagbar'
+" universal text linking - open links from vim
 Plug 'vim-scripts/utl.vim'
 
-Plug 'mrk21/yaml-vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'mileszs/ack.vim'
+" syntax
+Plug 'NoahTheDuke/vim-just' " justfile
+Plug 'mrk21/yaml-vim' " yaml
+Plug 'leafgarland/typescript-vim' " typescript
 
-" For writing
-" Focus mode: Goyo to turn it on or off
-Plug 'junegunn/goyo.vim'
-" For working with text files
-Plug 'reedes/vim-pencil'
+"Plug 'jceb/vim-orgmode' " Orgmode
 " Markdown wiki
 Plug 'vimwiki/vimwiki'
+" For writing
+Plug 'junegunn/goyo.vim' " Focus mode: Goyo to turn it on or off
+Plug 'reedes/vim-pencil' " wrapping
  
 " airline, because powerline is too hard to install
 " Plug 'vim-airline/vim-airline'
@@ -103,6 +107,7 @@ Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Fuzen-py/dark_mode.vim
 call plug#end()
 
+" This is a fix to try to stop vimwiki from taking over all markdown files
 au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn} setlocal syntax=markdown
 
 set nocompatible
@@ -195,9 +200,13 @@ noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 " noremap <leader>gal :execute':normal! a'."https://gitlab-sjc.cisco.com/"<cr>
 
 " Light and dark modes
-noremap <leader>bsd :set background=dark<cr>
-noremap <leader>bsl :set background=light<cr>
-noremap <leader>bst :call ToggleBackground()<cr>
+" ob from unimpaired so...
+" yob to toggle light mode light modn
+" [ob to turn light mode on
+" ]ob to turn light mode off
+" noremap <leader>bsd :set background=dark<cr>
+" noremap <leader>bsl :set background=light<cr>
+" noremap <leader>bst :call ToggleBackground()<cr>
 
 " FZF
 nnoremap <leader>p :FZF<cr>

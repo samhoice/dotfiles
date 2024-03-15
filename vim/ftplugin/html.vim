@@ -10,6 +10,6 @@ setlocal shiftwidth=2
 noremap <localleader>dv :execute "normal! i{{  }}"<cr>hh
 noremap <localleader>dt :execute "normal! i{%  %}"<cr>hh
 
-# html snippets
+" html snippets
 noremap <localleader>ha :execute "normal! i<a href=\"\"></a>"<cr>
 noremap <localleader>hd :execute "normal! i<div></div>"<cr>hhhhh
