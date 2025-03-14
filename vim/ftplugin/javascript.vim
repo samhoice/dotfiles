@@ -5,4 +5,8 @@ setlocal shiftwidth=2
 
 setlocal number
 
-noremap <localleader>b. :!bun run prettier -w %<cr>
+"noremap <localleader>b. :!bun run prettier -w %<cr>
+noremap <localleader>b. :!prettier -w %<cr>
+
+"let b:compiler = 'eslint'
+"let b:dispatch = 'eslint --format compact %'

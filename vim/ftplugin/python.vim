@@ -9,8 +9,10 @@ setlocal fileformat=unix
 setlocal number
 
 " blacken
-noremap <localleader>b. :!black %<cr>
-noremap <localleader>b :!black 
+noremap <localleader>b. :!uvx black %<cr>
+"noremap <localleader>b :!black 
+"noremap <localleader>b. :!uvx ruff format %<cr>
+
 " isort
 noremap <localleader>is. :!isort %<cr>
 

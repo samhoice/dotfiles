@@ -45,26 +45,28 @@ filetype plugin indent on
 call plug#begin('~/.vim/vplug')
 
 " Code editing
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim' " use FZF instead
 " Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'Xuyuanp/nerdtree-git-plugin' " Don't use nerdtree
 Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'pangloss/vim-javascript'
-Plug 'dense-analysis/ale'
+Plug 'christoomey/vim-tmux-navigator' " switched to kitty for now
+Plug 'pangloss/vim-javascript' " might not need nvim
+Plug 'dense-analysis/ale' " not for nvim
 Plug 'christianrondeau/vim-base64'
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary' " not for nvim
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-unimpaired' " pairs of switches ] mappings
+Plug 'tpope/vim-vinegar' " netrw improvements
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-dispatch'
 Plug 'easymotion/vim-easymotion'
 Plug 'raimon49/requirements.txt.vim'
 Plug 'moll/vim-bbye'
 
+"Scratch buffer
+Plug 'mtth/scratch.vim'
 
 " Expirimental
 " Quickfix grep
@@ -216,6 +218,9 @@ nnoremap <leader>; :Buffers<cr>
 let g:ale_hover_to_preview = 0
 nnoremap <leader>at <Plug>(ale_toggle)
 nnoremap <leader>ag <Plug>(ale_go_to_definition)
+let g:ale_linters_ignore = {'typescript': ['biome', 'typecheck', 'xo', 'deno', 'cspell']}
+
+
 " references will be found and added to quickfix window, which will not be
 " shown
 nnoremap <silent> <Plug>(ale_find_ref_qf) :ALEFindReferences -quickfix<Return>

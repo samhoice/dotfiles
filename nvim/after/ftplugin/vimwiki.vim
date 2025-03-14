@@ -6,3 +6,8 @@ noremap <localleader>wx :PencilOff<cr>
 noremap <localleader>tv :set filetype=markdown<cr>
 
 :PencilSoft
+
+set tabstop=2
+set softtabstop=2
+set expandtab
+set shiftwidth=2
