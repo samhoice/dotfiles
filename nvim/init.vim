@@ -1,8 +1,22 @@
-lua require'config'
+"lua require'config'
 
 let mapleader=" "
 let localleader="\\"
 
+call plug#begin('~/.vim/vplug')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'vimwiki/vimwiki'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'preservim/vim-pencil' " wrapping
+Plug 'nvim-lualine/lualine.nvim'
+"Plug 'neovim/nvim-lspconfing'
+call plug#end()
 
 :set backupcopy=yes
 
@@ -83,7 +97,7 @@ endfunction
 " Define a command to use the function easier
 command! -nargs=1 Pager execute "call s:dump(" string(<q-args>) ")"
 
-colorscheme kanagawa
+"colorscheme kanagawa
 "colorscheme tokyonight
-"colorscheme PaperColor
+colorscheme PaperColor
 

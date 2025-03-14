@@ -1,10 +1,10 @@
 -- pipx install pyright
-require'lspconfig'.pyright.setup{}
+--require'lspconfig'.pyright.setup{}
 -- npm install i -g tsserver
-require'lspconfig'.tsserver.setup{}
+--require'lspconfig'.tsserver.setup{}
 -- npm i -g vscode-langservers-extracted
-require'lspconfig'.eslint.setup{}
-require'lspconfig'.marksman.setup{}
+--require'lspconfig'.eslint.setup{}
+--require'lspconfig'.marksman.setup{}
 
  vim.api.nvim_create_autocmd("Filetype", {
  	pattern = { "html", "shtml", "htm" },
@@ -18,7 +18,7 @@ require'lspconfig'.marksman.setup{}
  })
 
 require'lualine'.setup{}
-require'tree-sitter-just'.setup{}
+--require'tree-sitter-just'.setup{}
 
 -- require('buffer_switcher')
 
@@ -37,8 +37,8 @@ vim.keymap.set('n', 'gra', vim.lsp.buf.code_action)
 vim.keymap.set('n', 'grr', vim.lsp.buf.references)
 vim.keymap.set('n', 'grh', vim.lsp.buf.signature_help)
 
--- require('lualine').hide()
--- require('lualine').hide({unhide=true})
+require('lualine').hide()
+require('lualine').hide({unhide=true})
 
 -- vim.api.nvim_set_option('cursorline', true)
 -- vim.api.nvim_set_option('cursorcolumn', true)
