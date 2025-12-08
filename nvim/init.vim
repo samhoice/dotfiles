@@ -1,4 +1,3 @@
-"lua require'config'
 
 let mapleader=" "
 let localleader="\\"
@@ -7,15 +6,28 @@ call plug#begin('~/.vim/vplug')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'jremmen/vim-ripgrep'
 Plug 'vimwiki/vimwiki'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-repeat' " doesn't work for nvim, I guess
+Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'preservim/vim-pencil' " wrapping
+Plug 'tpope/vim-vinegar'
+Plug 'airblade/vim-gitgutter'
+Plug 'reedes/vim-pencil' " wrapping
 Plug 'nvim-lualine/lualine.nvim'
-"Plug 'neovim/nvim-lspconfing'
+Plug 'moll/vim-bbye'
+" themes
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'folke/tokyonight.nvim'
+" syntax/checking
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#nvim-treesitter
 call plug#end()
 
 :set backupcopy=yes
@@ -26,9 +38,10 @@ noremap <leader>el :edit ~/.config/nvim/lua/config.lua<cr>
 noremap <leader>sv :source ~/.config/nvim/init.vim<cr>
 noremap <leader>sl :luafile ~/.config/nvim/lua/config.lua<cr>
 noremap <leader>ed :edit ~/.config/nvim/ftplugin/<cr>
+nnoremap <leader>bd :Bd<cr>
 
 " hightlight like search without moving the cursor
-nnoremap <Space>* <Cmd>let @/='\<'.expand('<cword>').'\>'<bar>set hlsearch<CR>
+nnoremap <leader>* <Cmd>let @/='\<'.expand('<cword>').'\>'<bar>set hlsearch<CR>
 
 " Date
 noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
@@ -45,7 +58,6 @@ noremap <C-l> <C-w><C-l>
 
 nnoremap <leader>p :FZF<CR>
 
-nnoremap <leader>bd :e#<bar>bd #<CR>
 nnoremap <leader>; :Buffers<CR>
 "nnoremap <leader>; :lua open_floating_buffer_list()<CR>
 
@@ -55,7 +67,8 @@ nnoremap <leader>; :Buffers<CR>
 
 "let g:vimwiki_list=[{'path': '~/', 'listsyms': ' .oOx'}]
 
-command! StripTrailingWhiteSpace :%s/\s\{1,\}$<cr>
+command! StripTrailingWhiteSpace :%s/\s\{1,\}$
+nnoremap <leader>s<space> :StripTrailingWhiteSpace<cr>
 
 " Expirimental from here: 5/20/24, this actually works just fine for me
 " https://github.com/neovim/neovim/issues/5054#issuecomment-911087978
@@ -101,3 +114,5 @@ command! -nargs=1 Pager execute "call s:dump(" string(<q-args>) ")"
 "colorscheme tokyonight
 colorscheme PaperColor
 
+
+lua require'config'
