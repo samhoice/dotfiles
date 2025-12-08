@@ -10,12 +10,19 @@ Plug 'junegunn/goyo.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'vimwiki/vimwiki'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'rebelot/kanagawa.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-dispatch'
 Plug 'preservim/vim-pencil' " wrapping
 Plug 'nvim-lualine/lualine.nvim'
 "Plug 'neovim/nvim-lspconfing'
+Plug 'tpope/vim-vinegar'
+Plug 'easymotion/vim-easymotion'
+Plug 'moll/vim-bbye'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'kdheepak/lazygit.nvim'
 call plug#end()
 
 :set backupcopy=yes
@@ -26,6 +33,8 @@ noremap <leader>el :edit ~/.config/nvim/lua/config.lua<cr>
 noremap <leader>sv :source ~/.config/nvim/init.vim<cr>
 noremap <leader>sl :luafile ~/.config/nvim/lua/config.lua<cr>
 noremap <leader>ed :edit ~/.config/nvim/ftplugin/<cr>
+" this will change based on the location of this config file
+noremap <leader>ew :edit ~/wezterm.lua<cr>
 
 " hightlight like search without moving the cursor
 nnoremap <Space>* <Cmd>let @/='\<'.expand('<cword>').'\>'<bar>set hlsearch<CR>
@@ -38,14 +47,15 @@ noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 "tnoremap <Esc> <C-\><C-n>
 
 " Not using tmux anymore but like having these mappings
-noremap <C-h> <C-w><C-h>
-noremap <C-j> <C-w><C-j>
-noremap <C-k> <C-w><C-k>
-noremap <C-l> <C-w><C-l>
+"noremap <C-h> <C-w><C-h>
+"noremap <C-j> <C-w><C-j>
+"noremap <C-k> <C-w><C-k>
+"noremap <C-l> <C-w><C-l>
 
 nnoremap <leader>p :FZF<CR>
 
-nnoremap <leader>bd :e#<bar>bd #<CR>
+"nnoremap <leader>bd :e#<bar>bd #<CR>
+nnoremap <leader>bd :Bdelete<cr>
 nnoremap <leader>; :Buffers<CR>
 "nnoremap <leader>; :lua open_floating_buffer_list()<CR>
 
@@ -100,4 +110,5 @@ command! -nargs=1 Pager execute "call s:dump(" string(<q-args>) ")"
 "colorscheme kanagawa
 "colorscheme tokyonight
 colorscheme PaperColor
-
+set background=light
+"set background=dark

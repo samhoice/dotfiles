@@ -68,7 +68,60 @@ function toggle_focus ()
     vim.cmd('Goyo')
 end
 
-
 vim.keymap.set('n', '[of', focus_on)
 vim.keymap.set('n', ']of', focus_off)
 vim.keymap.set('n', 'yof', toggle_focus)
+
+function create_scratch_buffer ()
+    -- Thanks to claude
+    -- Create a new buffer
+    local buf = vim.api.nvim_create_buf(false, true)
+    
+    -- Set buffer options
+    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+    vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+
+    vim.api.nvim_buf_set_option(buf, 'buflisted', false)
+
+    vim.api.nvim_buf_set_option(buf, 'swapfile', false)
+    
+    -- Switch to the new buffer
+    vim.api.nvim_set_current_buf(buf)
+    
+    -- Set window options for the current window
+    vim.opt_local.list = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.number = false
+    
+    return buf
+end
+
+local function dump_command(cmd)
+    -- Execute the command and capture output
+
+    local output = vim.api.nvim_exec2(cmd, { output = true })
+    
+    -- Create new scratch buffer
+    local buf = create_scratch_buffer()
+    
+    -- Split output into lines and set buffer content
+    local lines = vim.split(output.output, '\n')
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    
+    -- Set buffer as readonly and unmodifiable
+    vim.api.nvim_buf_set_option(buf, 'readonly', true)
+    vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+    vim.api.nvim_buf_set_option(buf, 'modified', false)
+    
+    -- Map Escape to close buffer (using bdelete)
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<Esc>', ':bdelete<CR>', 
+        { noremap = true, silent = true })
+    
+    return buf
+end
+
+vim.api.nvim_create_user_command('Scratch', create_scratch_buffer, {})
+vim.api.nvim_create_user_command('Dump', function(opts)
+    dump_command(opts.args)
+end, { nargs = 1, complete = 'command' })
+
