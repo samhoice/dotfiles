@@ -9,7 +9,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'jremmen/vim-ripgrep'
 Plug 'vimwiki/vimwiki'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-repeat' " doesn't work for nvim, I guess
 Plug 'tpope/vim-speeddating'
@@ -27,7 +26,9 @@ Plug 'folke/tokyonight.nvim'
 " syntax/checking
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#nvim-treesitter
+Plug 'tpope/vim-dispatch'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'kdheepak/lazygit.nvim'
 call plug#end()
 
 :set backupcopy=yes
@@ -40,6 +41,10 @@ noremap <leader>sl :luafile ~/.config/nvim/lua/config.lua<cr>
 noremap <leader>ed :edit ~/.config/nvim/ftplugin/<cr>
 nnoremap <leader>bd :Bd<cr>
 
+" this will change based on the location of this config file
+" TODO: Maybe set up a projects directory location environment variable?
+noremap <leader>ew :edit ~/wezterm.lua<cr>
+
 " hightlight like search without moving the cursor
 nnoremap <leader>* <Cmd>let @/='\<'.expand('<cword>').'\>'<bar>set hlsearch<CR>
 
@@ -51,10 +56,10 @@ noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 "tnoremap <Esc> <C-\><C-n>
 
 " Not using tmux anymore but like having these mappings
-noremap <C-h> <C-w><C-h>
-noremap <C-j> <C-w><C-j>
-noremap <C-k> <C-w><C-k>
-noremap <C-l> <C-w><C-l>
+"noremap <C-h> <C-w><C-h>
+"noremap <C-j> <C-w><C-j>
+"noremap <C-k> <C-w><C-k>
+"noremap <C-l> <C-w><C-l>
 
 nnoremap <leader>p :FZF<CR>
 
@@ -114,5 +119,7 @@ command! -nargs=1 Pager execute "call s:dump(" string(<q-args>) ")"
 "colorscheme tokyonight
 colorscheme PaperColor
 
-
 lua require'config'
+
+set background=light
+"set background=dark
