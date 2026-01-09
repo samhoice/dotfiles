@@ -1,7 +1,10 @@
 -- pipx install pyright
---require'lspconfig'.pyright.setup{}
+-- require'lspconfig'.pyright.setup{}
+require'lspconfig'.basedpyright.setup{}
 -- npm install i -g tsserver
---require'lspconfig'.tsserver.setup{}
+-- Instead of that, use typescript-language-server
+-- require'lspconfig'.tsserver.setup{}
+require'lspconfig'.ts_ls.setup{}
 -- npm i -g vscode-langservers-extracted
 --require'lspconfig'.eslint.setup{}
 --require'lspconfig'.marksman.setup{}
@@ -18,7 +21,6 @@
  })
 
 require'lualine'.setup{}
---require'tree-sitter-just'.setup{}
 
 -- require('buffer_switcher')
 
@@ -72,6 +74,10 @@ vim.keymap.set('n', '[of', focus_on)
 vim.keymap.set('n', ']of', focus_off)
 vim.keymap.set('n', 'yof', toggle_focus)
 
+-- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation
+require'nvim-treesitter.configs'.setup{highlight={enable=true}}
+
+
 function create_scratch_buffer ()
     -- Thanks to claude
     -- Create a new buffer
@@ -124,7 +130,6 @@ vim.api.nvim_create_user_command('Scratch', create_scratch_buffer, {})
 vim.api.nvim_create_user_command('Dump', function(opts)
     dump_command(opts.args)
 end, { nargs = 1, complete = 'command' })
-
 
 
 -- Source - https://stackoverflow.com/a
