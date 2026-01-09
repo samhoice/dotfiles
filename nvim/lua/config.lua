@@ -125,3 +125,27 @@ vim.api.nvim_create_user_command('Dump', function(opts)
     dump_command(opts.args)
 end, { nargs = 1, complete = 'command' })
 
+
+
+-- Source - https://stackoverflow.com/a
+-- Posted by Stacky
+-- Retrieved 2025-12-09, License - CC BY-SA 4.0
+
+-- use windows clipboard in WSL2:
+local uname_output = vim.fn.system('uname -r')
+if string.find(uname_output, "microsoft") then
+    -- Create the augroup
+    local augroup_id = vim.api.nvim_create_augroup("Yank", { clear = true })
+
+    -- Create the autocmd for TextYankPost
+    vim.api.nvim_create_autocmd("TextYankPost", {
+        group = augroup_id,
+        callback = function()
+            -- Get the content of the default register (yanked text)
+            local yanked_text = vim.fn.getreg('"')
+            -- Pipe the yanked text to clip.exe
+            vim.fn.system({ "/mnt/c/Windows/System32/clip.exe" }, yanked_text)
+        end,
+    })
+end
+
