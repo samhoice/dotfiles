@@ -56,10 +56,10 @@ noremap <leader>D :execute ':normal! a'.strftime('%Y-%m-%d')<cr>
 "tnoremap <Esc> <C-\><C-n>
 
 " Not using tmux anymore but like having these mappings
-"noremap <C-h> <C-w><C-h>
-"noremap <C-j> <C-w><C-j>
-"noremap <C-k> <C-w><C-k>
-"noremap <C-l> <C-w><C-l>
+noremap <C-h> <C-w><C-h>
+noremap <C-j> <C-w><C-j>
+noremap <C-k> <C-w><C-k>
+noremap <C-l> <C-w><C-l>
 
 nnoremap <leader>p :FZF<CR>
 
