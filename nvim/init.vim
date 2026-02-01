@@ -16,7 +16,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'airblade/vim-gitgutter'
-Plug 'reedes/vim-pencil' " wrapping
+Plug 'preservim/vim-pencil' " wrapping
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'moll/vim-bbye'
 " themes
