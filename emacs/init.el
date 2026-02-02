@@ -4,6 +4,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(leuven))
+ '(indent-tabs-mode nil)
+ ;;'(js-indent-level 2)
  '(org-agenda-files '("~/notes/tasks.org"))
  '(package-selected-packages nil))
 (custom-set-faces
@@ -48,6 +50,16 @@
   :config
   (setq typescript-indent-level 2))
 
+(use-package js-mode
+  :mode "\\.js\\'"
+  :config
+  (setq js-basic-offset 2))
+
+(use-package js-jsx-mode
+  :mode "\\.js\\'"
+  :config
+  (setq js-basic-offset 2))
+
 ;; (use-package js2-mode
 ;;   :ensure
 ;;   :mode "\\.js\\'"
@@ -68,7 +80,9 @@
   :config
   (setq lsp-headerline-breadcrumb-enable nil))
 
-
-
 (use-package apheleia
-  :ensure t)
+  :ensure t
+  :config
+    (setf (alist-get 'prettier-json apheleia-formatters)
+      '("prettier" "--stdin-filepath" filepath))
+  )
