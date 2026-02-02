@@ -1,10 +1,10 @@
 -- pipx install pyright
 -- require'lspconfig'.pyright.setup{}
-require'lspconfig'.basedpyright.setup{}
+-- require'lspconfig'.basedpyright.setup{}
 -- npm install i -g tsserver
 -- Instead of that, use typescript-language-server
 -- require'lspconfig'.tsserver.setup{}
-require'lspconfig'.ts_ls.setup{}
+-- require'lspconfig'.ts_ls.setup{}
 -- npm i -g vscode-langservers-extracted
 --require'lspconfig'.eslint.setup{}
 --require'lspconfig'.marksman.setup{}
