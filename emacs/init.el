@@ -6,9 +6,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(leuven))
  '(indent-tabs-mode nil)
- ;;'(js-indent-level 2)
-  '(org-agenda-files
-   '("~/notes/tasks.org" "/home/jon/notes/2026-DevJournal.org"))
+ '(js-indent-level 2)
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -19,9 +17,10 @@
 
 
 ;; Org mode stuff
+(setq org-agenda-include-diary t)
 (setq org-directory "~/notes")
 (setq org-default-notes-file (concat org-directory "/2026-DevJournal.org"))
-(setq org-agenda-include-diary t)
+(setq org-agenda-files (list (concat org-directory "/2026-DevJournal.org") (concat org-directory "/tasks.org")))
 
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
@@ -35,6 +34,8 @@
 ;; for GUI
 (global-unset-key (kbd "C-z"))
 
+;; vertico, orderless, and consult are supposedly combinging to make my
+;; fuzzy search kinda work
 (use-package vertico
   :ensure
   :init (vertico-mode))
@@ -51,6 +52,9 @@
 (use-package markdown-mode
   :mode "\\.md\\'")
 
+;; Programming
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
 ;; Javascript and Typescript
 (use-package typescript-mode
   :ensure
@@ -61,18 +65,12 @@
 (use-package js-mode
   :mode "\\.js\\'"
   :config
-  (setq js-basic-offset 2))
+  (setq js-indent-level 2))
 
 (use-package js-jsx-mode
   :mode "\\.js\\'"
   :config
-  (setq js-basic-offset 2))
-
-;; (use-package js2-mode
-;;   :ensure
-;;   :mode "\\.js\\'"
-;;   :config
-;;   (setq js2-basic-offset 2))
+  (setq js-indent-level 2))
 
 (use-package lsp-mode
   :ensure t
