@@ -7,7 +7,8 @@
  '(custom-enabled-themes '(leuven))
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(elfeed-org elfeed vertico typescript-mode orderless magit lsp-mode consult apheleia)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -91,4 +92,22 @@
   :config
     (setf (alist-get 'prettier-json apheleia-formatters)
       '("prettier" "--stdin-filepath" filepath))
-  )
+    )
+
+(use-package elfeed
+  :ensure t)
+
+(use-package elfeed-org
+  :ensure t
+  :after elfeed
+  :custom
+  (rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")))
+
+(with-eval-after-load 'elfeed
+  (elfeed-org))
+
+;; My keybinds
+
+(global-set-key (kbd "C-c C-j r") 'elfeed)
+(set-register ?e (cons 'file "~/projects/dotfiles/emacs/init.el"))
+(set-register ?t (cons 'file "~/notes/tasks.org"))
