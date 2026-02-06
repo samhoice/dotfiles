@@ -108,6 +108,11 @@
 
 ;; My keybinds
 
-(global-set-key (kbd "C-c C-j r") 'elfeed)
+;; Looks like org-mode pollutes the C-c namespace with a
+;; bunch of bindings so I'm making myself a prefix of
+;; C-c M-j...
+(global-set-key (kbd "C-c M-j r") 'elfeed)
+
+;; Setting some registers
 (set-register ?e (cons 'file "~/projects/dotfiles/emacs/init.el"))
 (set-register ?t (cons 'file "~/notes/tasks.org"))
