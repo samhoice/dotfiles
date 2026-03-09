@@ -8,7 +8,7 @@
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
  '(package-selected-packages
-   '(elfeed-org elfeed vertico typescript-mode orderless magit lsp-mode consult apheleia)))
+   '(lua-mode elfeed-org elfeed vertico typescript-mode orderless magit lsp-mode consult apheleia)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -93,6 +93,10 @@
     (setf (alist-get 'prettier-json apheleia-formatters)
       '("prettier" "--stdin-filepath" filepath))
     )
+
+(use-package lua-mode
+  :ensure t
+  :mode "\\.lua\\'")
 
 (use-package elfeed
   :ensure t)
