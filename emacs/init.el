@@ -23,10 +23,23 @@
 (setq org-default-notes-file (concat org-directory "/2026-DevJournal.org"))
 (setq org-agenda-files (list (concat org-directory "/2026-DevJournal.org") (concat org-directory "/tasks.org")))
 
+;; Keybindings
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "M-o") #'other-window)
+
+;; backup files and auto-saves
+;; https://systemcrafters.net/emacs-tips/keeping-folders-clean/
+;; backup
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+;; auto-save
+(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
+;; auto-save-mode doesn't create the path automatically!
+(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+;; TODO: Consider package 'no-littering'
+
 
 ;; package manager
 (require 'package)
@@ -121,3 +134,4 @@
 ;; Setting some registers
 (set-register ?e (cons 'file "~/projects/dotfiles/emacs/init.el"))
 (set-register ?t (cons 'file "~/notes/tasks.org"))
+(set-register ?h (cons 'file "~/notes/emacs.org"))
