@@ -5,6 +5,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(leuven))
+ '(elfeed-feeds
+   '("pluralistic.net/feed"
+     ("https://jvns.ca/atom.xml" dev)
+     ("https://simonwillison.net/atom/everything/" dev)
+     ("https://www.penny-arcade.com/feed")
+     ("https://whatever.scalzi.com/atom")))
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
  '(package-selected-packages
@@ -135,3 +141,10 @@
 (set-register ?e (cons 'file "~/projects/dotfiles/emacs/init.el"))
 (set-register ?t (cons 'file "~/notes/tasks.org"))
 (set-register ?h (cons 'file "~/notes/emacs.org"))
+
+(setq interprogram-cut-function
+      (lambda (text &optional push)
+        (let ((process-connection-type nil))
+          (let ((proc (start-process "clip" nil "clip.exe")))
+            (process-send-string proc text)
+            (process-send-eof proc)))))
