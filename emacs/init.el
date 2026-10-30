@@ -83,13 +83,17 @@
   :config
   (setq typescript-indent-level 2))
 
-(use-package js-mode
-  :mode "\\.js\\'"
-  :config
-  (setq js-indent-level 2))
+;; .tsx: use tree-sitter's tsx-ts-mode when the grammar is installed
+;; (proper JSX support), otherwise fall back to typescript-mode.
+(add-to-list 'auto-mode-alist
+             (cons "\\.tsx\\'"
+                   (if (and (fboundp 'treesit-language-available-p)
+                            (treesit-language-available-p 'tsx))
+                       'tsx-ts-mode
+                     'typescript-mode)))
 
-(use-package js-jsx-mode
-  :mode "\\.js\\'"
+(use-package js-mode
+  :mode "\\.jsx?\\'"
   :config
   (setq js-indent-level 2))
 
@@ -131,6 +135,10 @@
   (elfeed-org))
 
 ;; My keybinds
+
+(global-set-key (kbd "C-c p") 'flymake-goto-previous-error)
+(global-set-key (kbd "C-c n") 'flymake-goto-next-error)
+
 
 ;; Looks like org-mode pollutes the C-c namespace with a
 ;; bunch of bindings so I'm making myself a prefix of
